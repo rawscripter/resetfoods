@@ -22,15 +22,17 @@ use App\Models\Sku;
 use DateTime;
 use App\Libraries\ZnUtilities;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct() {
-        $this->middleware('auth');
+    public function __construct()
+    {
+        $this->middleware(['auth', 'registration']);
     }
 
     /**
@@ -39,7 +41,8 @@ class HomeController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function index() {
+    public function index()
+    {
         $user_role = Auth::user()->user_role;
 
         if ($user_role == 1) {
@@ -96,58 +99,54 @@ class HomeController extends Controller {
                         $unlimited_pool_id = $unlimited_pool->id;
                     }
 
-                     if (count($supplier_pre_pool1) > 0 || count($supplier_buyer_pool) > 0) {
-                            if (in_array('17', $supplier_pre_pool1) && count($buyer_pre_pool1) > 0) {
+                    if (count($supplier_pre_pool1) > 0 || count($supplier_buyer_pool) > 0) {
+                        if (in_array('17', $supplier_pre_pool1) && count($buyer_pre_pool1) > 0) {
                             if ($supplier_pool12 != 0) {
-                                                                    if ($distance <= $supplier_pool12) {
-                                                                         $post_ids[] = $s->supplier_post_id;
-                                                                    }
-                                                                } else {
-                                                                      $post_ids[] = $s->supplier_post_id;
-                                                                }
-                    }
-                    else {
-                                if (count($supplier_pre_pool1) > 0 && count($supplier_buyer_pool) > 0) {
-                                        if (count($pre_pool_result) > 0 && count($buyer_pool_result) > 0) {
+                                if ($distance <= $supplier_pool12) {
+                                    $post_ids[] = $s->supplier_post_id;
+                                }
+                            } else {
+                                $post_ids[] = $s->supplier_post_id;
+                            }
+                        } else {
+                            if (count($supplier_pre_pool1) > 0 && count($supplier_buyer_pool) > 0) {
+                                if (count($pre_pool_result) > 0 && count($buyer_pool_result) > 0) {
 
-                                                                if ($supplier_pool12 != 0) {
-                                                                    if ($distance <= $supplier_pool12) {
-                                                                        $post_ids[] = $s->supplier_post_id;
-                                                                    }
-                                                                } else {
-                                                                    $post_ids[] = $s->supplier_post_id;
-                                                                }
+                                    if ($supplier_pool12 != 0) {
+                                        if ($distance <= $supplier_pool12) {
+                                            $post_ids[] = $s->supplier_post_id;
                                         }
-                    }
-                     else if (count($supplier_pre_pool1) > 0 && count($supplier_buyer_pool) == 0) {
+                                    } else {
+                                        $post_ids[] = $s->supplier_post_id;
+                                    }
+                                }
+                            } else if (count($supplier_pre_pool1) > 0 && count($supplier_buyer_pool) == 0) {
                                 if (count($pre_pool_result) > 0 && count($buyer_pool_result) == '0') {
 
-                                                              if ($supplier_pool12 != 0) {
-                                                            if ($distance <= $supplier_pool12) {
-                                                                $post_ids[] = $s->supplier_post_id;
-                                                            }
-                                                        } else {
-                                                            $post_ids[] = $s->supplier_post_id;
-                                                        }
-
-                                }
-                     }
-                    else if (count($supplier_pre_pool1) == 0 && count($supplier_buyer_pool) > 0) {
-                                       if (count($pre_pool_result) == 0 && count($buyer_pool_result) > 0) {
-
-                                                      if ($supplier_pool12 != 0) {
-                                                                if ($distance <= $supplier_pool12) {
-                                                                    $post_ids[] = $s->supplier_post_id;
-                                                                }
-                                                            } else {
-                                                                $post_ids[] = $s->supplier_post_id;
-                                                            }
+                                    if ($supplier_pool12 != 0) {
+                                        if ($distance <= $supplier_pool12) {
+                                            $post_ids[] = $s->supplier_post_id;
                                         }
-                                }
+                                    } else {
+                                        $post_ids[] = $s->supplier_post_id;
+                                    }
 
-                     }
-                }
-                    else {
+                                }
+                            } else if (count($supplier_pre_pool1) == 0 && count($supplier_buyer_pool) > 0) {
+                                if (count($pre_pool_result) == 0 && count($buyer_pool_result) > 0) {
+
+                                    if ($supplier_pool12 != 0) {
+                                        if ($distance <= $supplier_pool12) {
+                                            $post_ids[] = $s->supplier_post_id;
+                                        }
+                                    } else {
+                                        $post_ids[] = $s->supplier_post_id;
+                                    }
+                                }
+                            }
+
+                        }
+                    } else {
                         if (in_array($unlimited_pool_id, $supplier_post_pool)) {
                             $post_ids[] = $s->supplier_post_id;
                         } else {
@@ -173,16 +172,16 @@ class HomeController extends Controller {
 
             $itemsIds = BuyerPost::where('user_id', Auth::user()->id)->get()->pluck('supplier_post_id')->toArray();
 
-			/* DB::enableQueryLog(); */
+            /* DB::enableQueryLog(); */
             $data['buyer'] = SupplierPost::whereIn('supplier_post_id', $post_ids)->whereNotIn('supplier_post_id', $itemsIds)->with('skuInfo', 'userInfo')->get();
-			/* $query = DB::getQueryLog();
-			print_r($query); */
+            /* $query = DB::getQueryLog();
+            print_r($query); */
 
             $buyer_post_ids = DB::table('buyer_posts')->where('user_id', Auth::user()->id)->pluck('buyer_post_id');
             $supplier_post_ids = DB::table('supplier_allocations')->whereIn('buyer_post_id', $buyer_post_ids)->pluck('supplier_post_id');
             // $data['items'] = SupplierAllocation::where('buyer_id', Auth::user()->id)->get();
-            $data['items'] = BuyerPost::where('user_id', Auth::user()->id)->where('status','!=','Declined')->where('is_low_bid', '0')->with('skuInfo')->get();
-			//echo "<pre>"; print_r($data['buyer']); exit;
+            $data['items'] = BuyerPost::where('user_id', Auth::user()->id)->where('status', '!=', 'Declined')->where('is_low_bid', '0')->with('skuInfo')->get();
+            //echo "<pre>"; print_r($data['buyer']); exit;
 
             return view('frontend.buyer', $data);
         } else if ($user_role == 3) {
@@ -198,22 +197,21 @@ class HomeController extends Controller {
                 $date = new DateTime($s->created_at);
                 $date->modify("+" . $s->order_duration . " hours");
                 $new_time = $date->format("Y-m-d H:i:s");
-                if($s->status == 'pending'){
-                    if(strtotime($new_time) > strtotime($current_date)){
+                if ($s->status == 'pending') {
+                    if (strtotime($new_time) > strtotime($current_date)) {
                         $post_ids[] = $s->supplier_post_id;
                     }
-                }else{
+                } else {
                     $post_ids[] = $s->supplier_post_id;
                 }
             }
-
 
 
             $data['items'] = SupplierPost::orderBy('price', 'desc')->whereIn('supplier_post_id', $post_ids)->where('user_id', Auth::user()->id)->with('product', 'category', 'userInfo')->get();
 
             // var_dump($data['items']);
             // exit(0);
-            $data['imported'] = SupplierPostTemp::orderBy('supplier_post_id', 'asc')->where('user_id', Auth::user()->id)->where('flag',0)->get();
+            $data['imported'] = SupplierPostTemp::orderBy('supplier_post_id', 'asc')->where('user_id', Auth::user()->id)->where('flag', 0)->get();
 
             $setting = Setting::where('setting_name', 'product_detail')->first();
             $data['setting'] = Setting::where('setting_name', 'product_detail')->first();
@@ -232,7 +230,8 @@ class HomeController extends Controller {
         }
     }
 
-    public function dashboard() {
+    public function dashboard()
+    {
 
         if (Auth::user()->user_role != 1) {
             return redirect('/');

@@ -8,7 +8,7 @@ html {
 }
 
 #grad1 {
-    background-color:  #9C27B0;
+    background-color: #9C27B0;
     background-image: linear-gradient(120deg, #FF4081, #81D4FA)
 }
 
@@ -50,6 +50,7 @@ html {
     text-align: left;
     color: #9E9E9E
 }
+
 /*
 #msform input,
 #msform textarea {
@@ -176,14 +177,17 @@ select.list-dt:focus {
     font-family: FontAwesome;
     content: "4"
 }
+
 #progressbar #setp_5:before {
     font-family: FontAwesome;
     content: "5"
 }
+
 #progressbar #setp_6:before {
     font-family: FontAwesome;
     content: "6"
 }
+
 #progressbar #setp_7:before {
     font-family: FontAwesome;
     content: "7"
@@ -246,4 +250,12 @@ select.list-dt:focus {
 .fit-image {
     width: 100%;
     object-fit: cover
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
 }

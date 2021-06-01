@@ -9,10 +9,17 @@
                 </div>
                 <div class="col-md-8 col-lg-6 d-none d-lg-block">
                     <div class="sub_header_social_icon float-right">
-                        <a href="{{url('/login')}}" class="register_icon"><i class="fas fa-sign-in-alt"></i>Sign-In</a>
-                        @if($title != 'register')
-                            <a href="{{url('/register')}}" class="register_icon ml-3"><i
-                                    class="fas fa-user-plus"></i>Register</a>
+                        @if(!auth()->user())
+                            <a href="{{url('/login')}}" class="register_icon"><i class="fas fa-sign-in-alt"></i>Sign-In</a>
+
+                            @if($title != 'register')
+                                <a href="{{url('/register')}}" class="register_icon ml-3"><i
+                                        class="fas fa-user-plus"></i>Register</a>
+                            @endif
+
+                        @else
+                            <a href="{{url('/home')}}" class="register_icon"><i class="fas fa-user"></i>Dashboard</a>
+                            <a href="{{url('/logout')}}" class="register_icon ml-2"><i class="fas  fa-sign-in-alt"></i>Logout</a>
                         @endif
                     </div>
                 </div>

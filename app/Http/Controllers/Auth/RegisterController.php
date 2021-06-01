@@ -80,8 +80,14 @@ class RegisterController extends Controller
             $address = $address . ', ' . $zipcode;
         }
 
+        if ($data['user_role'] == 4) {
+            $data['user_role'] = 2;
+        } else if ($data['user_role'] == 5) {
+            $data['user_role'] = 3;
+        }
         return User::create([
             'name' => $data['name'],
+            'registration_step' => 1,
             'email' => $data['email'],
             'address' => $address,
             'company_name' => $data['company_name'],

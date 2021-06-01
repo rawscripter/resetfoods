@@ -20,188 +20,212 @@
                                 <li id="setp_3"></li>
                             </ul>
                             <!------------------------------------ step 01 start----------------------------------------------- -->
+                            @php
+                                $preference = App\Models\Pool::where('pool_type','1')->get();
+                            @endphp
+                            <div id="step-1">
+                                <form class="custom" role="form" method="POST"
+                                      action="{{ url('/register') }}">
+                                    <fieldset class="p-5 rounded border border-info mb-5">
+                                        <p class="text-left"><span>*</span> Tell us a little bit about yourself:</p>
+                                        <br>
+                                        <div class="step_1" id="step">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="register-form-holder">
 
-                            <form class="custom" role="form" method="POST"
-                                  action="{{ url('/register') }}">
-                                <fieldset class="p-5 rounded border border-info mb-5">
-                                    <p class="text-left"><span>*</span> Tell us a little bit about yourself:</p>
-                                    <br>
-                                    <div class="step_1" id="step">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="register-form-holder">
-
-                                                    {{ csrf_field() }}
-                                                    <input type="hidden" class="form-control lat" value="" name="lat"
-                                                           placeholder=""/>
-                                                    <input type="hidden" class="form-control geo_boundary" value="" name="geo_boundary"
-                                                           placeholder=""/>
-                                                    <input type="hidden" class="form-control lng" value="" name="lng"
-                                                           placeholder=""/>
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1">Account Type</label>
-                                                        <select class="custom-select form-control" name="user_role">
-                                                            <!--<option>Are you a Supply or Buyer? </option>-->
-                                                            <option value="2">Buyer</option>
-                                                            <option value="3">Supplier</option>
-                                                            <option value="2">Charity - Buyer</option>
-                                                            <option value="3">Charity - Supplier</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Contact Name</label>
-                                                                <input type="text" class="form-control"
-                                                                       value="{{ old('name') }}" required
-                                                                       name="name" placeholder="Contact Name"/>
-                                                                @if ($errors->has('name'))
-                                                                    <span class="help-block">
+                                                        {{ csrf_field() }}
+                                                        <input type="hidden" class="form-control lat" value=""
+                                                               name="lat"
+                                                               placeholder=""/>
+                                                        <input type="hidden" class="form-control geo_boundary" value=""
+                                                               name="geo_boundary"
+                                                               placeholder=""/>
+                                                        <input type="hidden" class="form-control lng" value=""
+                                                               name="lng"
+                                                               placeholder=""/>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Account Type</label>
+                                                            <select class="custom-select form-control account_type"
+                                                                    required name="user_role">
+                                                                <!--<option>Are you a Supply or Buyer? </option>-->
+                                                                <option value="">Select Account Type</option>
+                                                                <option value="2">Buyer</option>
+                                                                <option value="3">Supplier</option>
+                                                                <option value="4">Charity - Buyer</option>
+                                                                <option value="5">Charity - Supplier</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group hide charity_registration_number_area">
+                                                            <label for="exampleInputEmail1">Registration Number (Only
+                                                                for Charity)</label>
+                                                            <input type="text"
+                                                                   class="form-control charity_registration_number_field"
+                                                                   required
+                                                                   name="charity_registration_number">
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Contact Name</label>
+                                                                    <input type="text" class="form-control"
+                                                                           value="{{ old('name') }}" required
+                                                                           name="name" placeholder="Contact Name"/>
+                                                                    @if ($errors->has('name'))
+                                                                        <span class="help-block">
                                             <strong>{{ $errors->first('name') }}</strong>
                                         </span>
-                                                                @endif
+                                                                    @endif
+                                                                </div>
+
                                                             </div>
 
-                                                        </div>
-
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Company Name</label>
-                                                                <input type="text" class="form-control"
-                                                                       value="{{ old('company_name') }}"
-                                                                       name="company_name" placeholder="Company Name"/>
-                                                                @if ($errors->has('company_name'))
-                                                                    <span class="help-block">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Company Name</label>
+                                                                    <input type="text" class="form-control"
+                                                                           value="{{ old('company_name') }}"
+                                                                           name="company_name"
+                                                                           placeholder="Company Name"/>
+                                                                    @if ($errors->has('company_name'))
+                                                                        <span class="help-block">
                                             <strong>{{ $errors->first('company_name') }}</strong>
                                         </span>
-                                                                @endif
+                                                                    @endif
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
 
-                                                    <div class="form-group">
-                                                        <label>Street Address </label>
-                                                        <input type="text" class="form-control raddress s1 raddress1"
-                                                               value="{{ old('street') }}" required name="street"
-                                                               placeholder="Enter Street Address "/>
-                                                        @if ($errors->has('address'))
-                                                            <span class="help-block">
+                                                        <div class="form-group">
+                                                            <label>Street Address </label>
+                                                            <input type="text"
+                                                                   class="form-control raddress s1 raddress1"
+                                                                   value="{{ old('street') }}" required name="street"
+                                                                   placeholder="Enter Street Address "/>
+                                                            @if ($errors->has('address'))
+                                                                <span class="help-block">
                                             <strong>{{ $errors->first('address') }}</strong>
                                         </span>
-                                                        @endif
-                                                    </div>
+                                                            @endif
+                                                        </div>
 
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>City </label>
-                                                                <input type="text" class="form-control raddress s2"
-                                                                       value="{{ old('city') }}"
-                                                                       name="city" placeholder="Enter City"/>
-                                                                @if ($errors->has('address'))
-                                                                    <span class="help-block">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>City </label>
+                                                                    <input type="text" class="form-control raddress s2"
+                                                                           value="{{ old('city') }}"
+                                                                           name="city" placeholder="Enter City"/>
+                                                                    @if ($errors->has('address'))
+                                                                        <span class="help-block">
                                             <strong>{{ $errors->first('address') }}</strong>
                                         </span>
-                                                                @endif
+                                                                    @endif
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>State </label>
-                                                                <input type="text" class="form-control raddress s5"
-                                                                       value="{{ old('state') }}"
-                                                                       name="state" placeholder="Enter State "/>
-                                                                @if ($errors->has('address'))
-                                                                    <span class="help-block">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>State </label>
+                                                                    <input type="text" class="form-control raddress s5"
+                                                                           value="{{ old('state') }}"
+                                                                           name="state" placeholder="Enter State "/>
+                                                                    @if ($errors->has('address'))
+                                                                        <span class="help-block">
                                             <strong>{{ $errors->first('address') }}</strong>
                                         </span>
-                                                                @endif
+                                                                    @endif
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Zip Code </label>
-                                                                <input type="text" class="form-control raddress s3"
-                                                                       value="{{ old('zipcode') }}"
-                                                                       name="zipcode" placeholder="Enter Zipcode "/>
-                                                                @if ($errors->has('address'))
-                                                                    <span class="help-block">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Zip Code </label>
+                                                                    <input type="text" class="form-control raddress s3"
+                                                                           value="{{ old('zipcode') }}"
+                                                                           name="zipcode" placeholder="Enter Zipcode "/>
+                                                                    @if ($errors->has('address'))
+                                                                        <span class="help-block">
                                             <strong>{{ $errors->first('address') }}</strong>
                                         </span>
-                                                                @endif
+                                                                    @endif
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Country</label>
-                                                                <input type="text" class="form-control raddress s4"
-                                                                       value="{{ old('country') }}"
-                                                                       name="country" placeholder="Enter Country "/>
-                                                                @if ($errors->has('address'))
-                                                                    <span class="help-block">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Country</label>
+                                                                    <input type="text" class="form-control raddress s4"
+                                                                           value="{{ old('country') }}"
+                                                                           name="country" placeholder="Enter Country "/>
+                                                                    @if ($errors->has('address'))
+                                                                        <span class="help-block">
                                             <strong>{{ $errors->first('address') }}</strong>
                                         </span>
-                                                                @endif
+                                                                    @endif
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="form-group">
-                                                        <label>Email Address</label>
-                                                        <input type="text" class="form-control email" name="email"
-                                                               required
-                                                               value="{{ old('email') }}"
-                                                               placeholder="Email Address"/>
-                                                        @if ($errors->has('email'))
-                                                            <span class="help-block">
+                                                        <div class="form-group">
+                                                            <label>Email Address</label>
+                                                            <input type="text" class="form-control email" name="email"
+                                                                   required
+                                                                   value="{{ old('email') }}"
+                                                                   placeholder="Email Address"/>
+                                                            @if ($errors->has('email'))
+                                                                <span class="help-block">
                                             <strong>{{ $errors->first('email') }}</strong>
                                         </span>
-                                                        @endif
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Password</label>
-                                                                <input type="password" class="form-control"
-                                                                       name="password"
-                                                                       required
-                                                                       placeholder="Password"/>
-                                                            </div>
+                                                            @endif
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Password Confirmation</label>
-                                                                <input type="password" class="form-control"
-                                                                       name="password_confirmation" required
-                                                                       placeholder="Password Confirmation"/>
-                                                                @if ($errors->has('password_confirmation'))
-                                                                    <span class="help-block">
+
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Password</label>
+                                                                    <input type="password" class="form-control"
+                                                                           name="password"
+                                                                           required
+                                                                           placeholder="Password"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Password Confirmation</label>
+                                                                    <input type="password" class="form-control"
+                                                                           name="password_confirmation" required
+                                                                           placeholder="Password Confirmation"/>
+                                                                    @if ($errors->has('password_confirmation'))
+                                                                        <span class="help-block">
                                             <strong>{{ $errors->first('password_confirmation') }}</strong>
                                         </span>
-                                                                @endif
+                                                                    @endif
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- next button -->
-                                    <hr class="mt-5">
-                                    <input type="submit" class="mt-5 action-button float-right"
-                                           value="Register Now"/>
+                                        <!-- next button -->
+                                        <hr class="mt-5">
+                                        <input type="submit" class="mt-5 action-button float-right"
+                                               value="Register Now"/>
 
-                                </fieldset>
-                            </form>
-
+                                    </fieldset>
+                                </form>
+                            </div>
                         </div>
+
                     </div>
+
                 </div>
+
             </div>
         </div>
+    </div>
+    </div>
+    </div>
 
 
     </div>
@@ -251,5 +275,18 @@
                 }
             });
         }
+
+
+        $('.account_type').change(function () {
+            var $option = $(this).find('option:selected');
+            var value = $option.val();//to get content of "value" attrib
+            if (value == '4' || value == 5) {
+                $(".charity_registration_number_area").removeClass('hide');
+                $(".charity_registration_number_field").attr('required', true);
+            } else {
+                $(".charity_registration_number_area").addClass('hide');
+                $(".charity_registration_number_field").attr('required', false);
+            }
+        });
     </script>
 @endsection

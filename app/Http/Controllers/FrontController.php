@@ -63,4 +63,18 @@ class FrontController extends Controller
         $data['title'] = 'register';
         return view('auth.register', $data);
     }
+
+    public function registerStep2()
+    {
+        $data = array();
+        $data['title'] = 'register';
+        return view('auth.register-step-2', $data);
+    }
+
+    public function registerStep3()
+    {
+        $data = array();
+        $data['title'] = 'register';
+        return view('auth.register-step-3', $data);
+    }
 }

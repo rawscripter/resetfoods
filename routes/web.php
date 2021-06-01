@@ -10,6 +10,8 @@ Route::get('faq', 'FrontController@faq');
 Route::get('career', 'FrontController@career');
 Route::get('contact', 'FrontController@contact');
 Route::get('/register', 'FrontController@register');
+Route::get('/register-step-2', 'FrontController@registerStep2')->name('register-step-2');
+Route::get('/register-step-3', 'FrontController@registerStep3')->name('register-step-3');
 
 Route::Post('/register/f', 'UsersController@store')->name('user.register');
 Route::get('/clear-cache', function () {
@@ -22,8 +24,14 @@ Route::get('accept/allocation/{is_post}/{allocation_id}', 'AjaxController@accept
 Route::get('logout', 'Auth\LoginController@logout');
 
 
+//middleware check
+
+Route::group(['middleware' => 'registration'], function () {
+    Route::get('home', 'DashboardController@index')->name('home');
+    Route::get('account/settings', 'DashboardController@index');
+});
+
 Route::get('search', 'HomeController@index');
-Route::get('home', 'HomeController@index');
 Route::get('dashboard', 'HomeController@dashboard');
 
 Route::post('supplier/post', 'SuppliersController@store');
@@ -46,6 +54,7 @@ Route::post('search', 'SearchController@search');
 Route::resource('users', 'UsersController');
 Route::post('update/logistics', 'UsersController@updateLogistics');
 Route::post('update/preference', 'UsersController@updatePreference');
+Route::post('finish/registration', 'UsersController@finishRegistration');
 Route::post('update/distributionEstrictions', 'UsersController@updateDistributionEstrictions');
 
 Route::resource('categories', 'CategoriesController');
@@ -116,7 +125,7 @@ Route::get('update/post/staus/{type}/{id}', 'SuppliersController@updatePostStatu
 Route::get('users/delete/{id}', 'UsersController@deleteUser');
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/sender', function () {
     return view('sender');
