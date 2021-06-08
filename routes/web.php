@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
+
 Auth::routes();
 
 Route::get('/', 'FrontController@index');
@@ -29,6 +32,9 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::group(['middleware' => 'registration'], function () {
     Route::get('home', 'DashboardController@index')->name('home');
     Route::get('account/settings', 'DashboardController@index');
+
+    // for all ajax requests
+    Route::get('/ajax/get/all-preferences','PreferenceController@supplierPreferences');
 });
 
 Route::get('search', 'HomeController@index');

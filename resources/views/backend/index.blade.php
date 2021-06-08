@@ -59,7 +59,7 @@
 <body class="layout-light side-menu">
 
 <div id="app">
-    <app-body></app-body>
+    <app-body :user="{{auth()->user()}}"></app-body>
 </div>
 
 

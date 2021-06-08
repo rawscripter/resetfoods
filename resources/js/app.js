@@ -3,16 +3,21 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+"use strict";
+
+import Vue from "vue";
 
 require('./bootstrap');
+
+/* global window */
 
 window.Vue = require('vue');
 
 const $ = require('jquery');
 window.$ = $; // We declare it globally
 
-import {Datetime} from 'vue-datetime'
-import 'vue-datetime/dist/vue-datetime.css'
+import {Datetime} from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css';
 
 Vue.component('datetime', Datetime);
 
@@ -28,18 +33,18 @@ Vue.use(Toast, options);
 
 import VuePageTransition from 'vue-page-transition'
 
-Vue.use(VuePageTransition)
+Vue.use(VuePageTransition);
 
-import moment from 'moment'
+import moment from 'moment';
 
 Vue.filter('formatDateIntoNormalFormat', function (value) {
     if (value) {
-        return moment(String(value)).format('Do MMMM YYYY')
+        return moment(String(value)).format('Do MMMM YYYY');
     }
 });
 Vue.filter('formatDateIntoAdvanceFormat', function (value) {
     if (value) {
-        return moment(String(value)).format('Do MMMM YYYY, h:mm:ss a')
+        return moment(String(value)).format('Do MMMM YYYY, h:mm:ss a');
     }
 });
 
@@ -52,11 +57,17 @@ Vue.use(VueSweetalert2);
 Vue.component('app-body', require('./components/AppBody.vue').default);
 
 
-import router from './Router/router'
+import router from './Router/router';
+
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+import store from "./store";
 
 
 const app = new Vue({
     el: '#app',
+    store: new Vuex.Store(store),
     router,
 });
 

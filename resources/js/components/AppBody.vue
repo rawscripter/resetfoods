@@ -12,9 +12,14 @@ import MainLayout from "./LayoutParts/MainLayout";
 
 export default {
     name: "AppBody",
+    props:['user'],
     components: {
         MainLayout
     },
+    created() {
+        this.$store.commit('SET_USER',this.user)
+    }
+
 }
 </script>
 
