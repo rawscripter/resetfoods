@@ -18,7 +18,7 @@
                 </div>
                 <div class="ap-nameAddress pb-3">
                     <h5 class="ap-nameAddress__title">{{ user.name }}</h5>
-                    <p class="ap-nameAddress__subTitle fs-14 m-0">{{ user.role }}</p>
+                    <p class="ap-nameAddress__subTitle fs-14 m-0">{{ user.user_role == "2" ? 'Buyer' : '' }} {{ user.user_role == "3" ? 'Supplier' : '' }}</p>
                 </div>
             </div>
             <div class="ps-tab p-20 pb-25">
@@ -62,8 +62,8 @@ export default {
     data(){
         return{
             user:{
-                name: 'Shuvo Goswami',
-                role: 'Supplier'
+                name: '',
+                user_role: '2'
             }
         }
 
@@ -72,6 +72,9 @@ export default {
         changeActiveMenu(val){
             this.$emit('activeComponent',val);
         }
+    },
+    mounted() {
+        this.user = this.$store.state.user;
     }
 
 }

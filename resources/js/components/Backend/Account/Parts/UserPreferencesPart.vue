@@ -14,7 +14,22 @@
                             </div>
                         </div>
                         <div class="card-body">
-                           User Preference Goes here
+                            <div class="checkbox-theme-default custom-checkbox mb-2" v-for="preference in preferences"
+                                 :key="preference.id">
+                                <input v-model="selectedPreferences" :value="preference.id" class="checkbox" type="checkbox" :id="`check-grid-${preference.id}`">
+                                <label :for="`check-grid-${preference.id}`">
+                                                            <span class="checkbox-text">
+                                                                {{ preference.name }}
+                                                            </span>
+                                </label>
+                            </div>
+
+                            <br>
+                            <div class="form-group">
+                                <div class="btn btn-primary btn-sm">
+                                    Save Changes
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -26,7 +41,27 @@
 
 <script>
 export default {
-    name: "UserPreferencesPart"
+    name: "UserPreferencesPart",
+    data() {
+        return {
+            preferences: [],
+            selectedPreferences:[]
+        }
+    },
+    created() {
+        this.getAllPreferences();
+    },
+    methods: {
+        getAllPreferences() {
+            axios.get(`/ajax/get/all-preferences`)
+                .then(res => {
+                    this.preferences = res.data.preference;
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+    }
 }
 </script>
 

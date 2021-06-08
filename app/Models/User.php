@@ -56,7 +56,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function poolName()
+    public function poolName(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne('App\Models\Pool', 'id', 'pool');
     }

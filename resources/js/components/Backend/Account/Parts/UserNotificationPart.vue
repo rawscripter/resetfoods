@@ -15,7 +15,38 @@
                             </div>
                         </div>
                         <div class="card-body">
-                           Notifications
+                            <div class="col-lg-12">
+                                <div class="form-group">
+
+                                    <div class="checkbox-theme-default custom-checkbox ">
+                                        <input class="checkbox" type="checkbox" id="check-grid-1">
+                                        <label for="check-grid-1">
+                                                            <span class="checkbox-text">
+                                                               Email Notification
+                                                            </span>
+                                        </label>
+                                    </div>
+
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="checkbox-theme-default custom-checkbox ">
+                                        <input class="checkbox" type="checkbox" id="check-grid-2">
+                                        <label for="check-grid-2">
+                                                            <span class="checkbox-text">
+                                                               SMS Notification
+                                                            </span>
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <div class="btn btn-primary btn-sm">
+                                            Save Changes
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

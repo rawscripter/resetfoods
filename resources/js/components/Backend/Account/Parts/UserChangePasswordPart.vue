@@ -14,7 +14,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                           <div class="col-md-6 m-auto">
+                           <div class="col-md-10 m-auto">
                                <div class="form-group">
                                    <label for="">New Password</label>
                                    <input type="password" class="form-control" placeholder="New Password">

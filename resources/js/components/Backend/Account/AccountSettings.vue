@@ -26,9 +26,10 @@ import UserChangePasswordPart from "./Parts/UserChangePasswordPart";
 import UserDeliveryLocationPart from "./Parts/UserDeliveryLocationPart";
 import UserBankInformationPart from "./Parts/UserBankInformationPart";
 import UserNotificationPart from "./Parts/UserNotificationPart";
+
 export default {
     name: "AccountSettings",
-    components:{
+    components: {
         UserPersonalInfoPart,
         UserPreferencesPart,
         UserChangePasswordPart,
@@ -56,6 +57,7 @@ export default {
         activeComponent(val) {
             this.component = val;
         },
+
     }
 }
 </script>
