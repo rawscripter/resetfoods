@@ -17,7 +17,7 @@ Route::Post('/register/f', 'UsersController@store')->name('user.register');
 Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     Artisan::call('view:clear');
-    exec('composer dump-autoload');
+    exec('composer dump-autwoload');
 });
 
 Route::get('accept/allocation/{is_post}/{allocation_id}', 'AjaxController@acceptAllocation');
