@@ -181,4 +181,21 @@ class PreferenceController extends Controller
             return redirect('/preference');
         }
     }
+
+    public function updateSupplierPreferences(Request $request)
+    {
+        $user = \auth()->user();
+        $preferences = $request->preferences;
+
+        $user->preference = implode(',', $preferences);
+        if ($user->save()) {
+            $res['success'] = true;
+            $res['message'] = 'Profile Updated.';
+        } else {
+            $res['success'] = false;
+            $res['message'] = 'Server Error.';
+        }
+
+        return response()->json($res);
+    }
 }

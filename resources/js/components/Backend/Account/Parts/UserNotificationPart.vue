@@ -13,13 +13,19 @@
                                      Notification Settings.
                                 </span>
                             </div>
+                            <div class="card-extra">
+                                <div @click="saveChanges" class="btn btn-primary btn-sm">
+                                    Save Changes
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="col-lg-12">
                                 <div class="form-group">
-
                                     <div class="checkbox-theme-default custom-checkbox ">
-                                        <input class="checkbox" type="checkbox" id="check-grid-1">
+                                        <input v-model="user.email_notification" class="checkbox" value="1"
+                                               type="checkbox"
+                                               id="check-grid-1">
                                         <label for="check-grid-1">
                                                             <span class="checkbox-text">
                                                                Email Notification
@@ -27,11 +33,13 @@
                                         </label>
                                     </div>
 
-
                                 </div>
                                 <div class="form-group">
                                     <div class="checkbox-theme-default custom-checkbox ">
-                                        <input class="checkbox" type="checkbox" id="check-grid-2">
+                                        <input value="1" v-model="user.text_notification"
+                                               class="checkbox"
+                                               type="checkbox"
+                                               id="check-grid-2">
                                         <label for="check-grid-2">
                                                             <span class="checkbox-text">
                                                                SMS Notification
@@ -39,12 +47,6 @@
                                         </label>
                                     </div>
                                     <br>
-                                    <div class="form-group">
-                                        <div class="btn btn-primary btn-sm">
-                                            Save Changes
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
@@ -58,7 +60,27 @@
 
 <script>
 export default {
-    name: "UserNotificationPart"
+    name: "UserNotificationPart",
+    props: ['user'],
+    methods: {
+        saveChanges() {
+            axios.post(`/ajax/user/update/notification`, {
+                text_notification: this.user.text_notification,
+                email_notification: this.user.email_notification,
+            })
+                .then(response => {
+                    if (response.data.success) {
+                        this.$toast.success(response.data.message)
+                    } else {
+                        this.$toast.error(response.data.message)
+                    }
+                })
+                .catch(err => {
+                    this.$toast.error("Request Failed.")
+                })
+
+        }
+    }
 }
 </script>
 

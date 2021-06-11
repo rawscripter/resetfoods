@@ -43,7 +43,9 @@ class User extends Authenticatable
         'country',
         'address',
         'registration_step',
-        'is_active'
+        'is_active',
+        'bank_account_name',
+        'bank_account_type'
     ];
 
     /**
@@ -59,5 +61,10 @@ class User extends Authenticatable
     public function poolName(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne('App\Models\Pool', 'id', 'pool');
+    }
+
+    public function pools(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Pool::class)->orderBy('created_at', 'desc');
     }
 }

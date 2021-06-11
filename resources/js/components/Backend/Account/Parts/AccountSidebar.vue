@@ -18,34 +18,53 @@
                 </div>
                 <div class="ap-nameAddress pb-3">
                     <h5 class="ap-nameAddress__title">{{ user.name }}</h5>
-                    <p class="ap-nameAddress__subTitle fs-14 m-0">{{ user.user_role == "2" ? 'Buyer' : '' }} {{ user.user_role == "3" ? 'Supplier' : '' }}</p>
+                    <p class="ap-nameAddress__subTitle fs-14 m-0">{{ user.user_role == "2" ? 'Buyer' : '' }}
+                        {{ user.user_role == "3" ? 'Supplier' : '' }}</p>
                 </div>
             </div>
             <div class="ps-tab p-20 pb-25">
                 <div class="nav flex-column text-left" id="v-pills-tab" role="tablist"
                      aria-orientation="vertical">
-                    <a @click="changeActiveMenu('UserPersonalInfoPart')" class="nav-link " id="v-pills-home-tab" data-toggle="pill"
-                       href="#v-pills-home" role="tab" aria-controls="v-pills-home"
+                    <a @click="changeActiveMenu('UserPersonalInfoPart')" class="nav-link "
+                       data-toggle="pill"
+                       role="tab" aria-controls="v-pills-home"
                        aria-selected="true">
-                        <span data-feather="user"></span>Edit profile</a>
-                    <a @click="changeActiveMenu('UserPreferencesPart')" class="nav-link" id="v-pills-profile-tab" data-toggle="pill"
-                       href="#v-pills-profile" role="tab" aria-controls="v-pills-profile"
-                       aria-selected="false">
-                        <span data-feather="settings"></span>Update Preferences</a>
-                    <a @click="changeActiveMenu('UserChangePasswordPart')" class="nav-link" id="v-pills-messages-tab" data-toggle="pill"
-                       href="#v-pills-messages" role="tab" aria-controls="v-pills-messages"
+                        <span data-feather="user"></span>
+                        Edit profile
+                    </a>
+                    <a @click="changeActiveMenu('UserChangePasswordPart')" class="nav-link"
+                       data-toggle="pill"
+                       role="tab" aria-controls="v-pills-messages"
                        aria-selected="false">
                         <span data-feather="key"></span>change password</a>
-                    <a @click="changeActiveMenu('UserDeliveryLocationPart')" class="nav-link" id="v-pills-settings-tab" data-toggle="pill"
-                       href="#v-pills-settings" role="tab" aria-controls="v-pills-settings"
+
+                    <a @click="changeActiveMenu('UserPreferencesPart')" class="nav-link"
+                       data-toggle="pill"
+                       role="tab" aria-controls="v-pills-profile"
                        aria-selected="false">
-                        <span data-feather="users"></span>Delivery Locations</a>
-                    <a @click="changeActiveMenu('UserBankInformationPart')" class="nav-link" id="v-pills-settings-tab" data-toggle="pill"
-                       href="#v-pills-settings" role="tab" aria-controls="v-pills-settings"
+                        <span data-feather="settings"></span>Update Preferences</a>
+
+                    <a @click="changeActiveMenu('SupplierPoolsPart')" class="nav-link"
+                       data-toggle="pill"
+                       role="tab" aria-controls="v-pills-profile"
+                       aria-selected="false">
+                        <span data-feather="settings"></span>Pools</a>
+
+<!--                    <a @click="changeActiveMenu('UserDeliveryLocationPart')" class="nav-link"-->
+                    <!--                       data-toggle="pill"-->
+                    <!--                       role="tab" aria-controls="v-pills-settings"-->
+                    <!--                       aria-selected="false">-->
+                    <!--                        <span data-feather="users"></span>Delivery Locations</a>-->
+
+                    <a @click="changeActiveMenu('UserBankInformationPart')" class="nav-link"
+                       data-toggle="pill"
+                       role="tab" aria-controls="v-pills-settings"
                        aria-selected="false">
                         <span data-feather="users"></span>Bank Information</a>
-                    <a @click="changeActiveMenu('UserNotificationPart')" class="nav-link" id="v-pills-notification-tab" data-toggle="pill"
-                       href="#v-pills-notification" role="tab" aria-controls="v-pills-notification"
+
+                    <a @click="changeActiveMenu('UserNotificationPart')" class="nav-link"
+                       data-toggle="pill"
+                       role="tab" aria-controls="v-pills-notification"
                        aria-selected="false">
                         <span data-feather="bell"></span>notification</a>
                 </div>
@@ -59,27 +78,23 @@
 <script>
 export default {
     name: "AccountSidebar",
-    data(){
-        return{
-            user:{
-                name: '',
-                user_role: '2'
-            }
-        }
+    props: ['user'],
+    data() {
+        return {}
 
     },
-    methods:{
-        changeActiveMenu(val){
-            this.$emit('activeComponent',val);
+    methods: {
+        changeActiveMenu(val) {
+            this.$emit('activeComponent', val);
         }
     },
-    mounted() {
-        this.user = this.$store.state.user;
-    }
+
 
 }
 </script>
 
 <style scoped>
-
+.nav-link {
+    cursor: pointer;
+}
 </style>

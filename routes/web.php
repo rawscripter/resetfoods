@@ -30,11 +30,34 @@ Route::get('logout', 'Auth\LoginController@logout');
 //middleware check
 
 Route::group(['middleware' => 'registration'], function () {
+
+    //for vue routes
     Route::get('home', 'DashboardController@index')->name('home');
     Route::get('account/settings', 'DashboardController@index');
+    Route::get('supplier/create/post', 'DashboardController@index');
 
     // for all ajax requests
-    Route::get('/ajax/get/all-preferences','PreferenceController@supplierPreferences');
+    Route::get('/ajax/get/all-preferences', 'PreferenceController@supplierPreferences');
+    Route::get('/ajax/user/pools', 'PoolsController@supplierPools');
+
+    //user profile updates
+    Route::post('/ajax/user/update/profile', 'AjaxUserController@updateProfile');
+    Route::post('/ajax/user/update/password', 'AjaxUserController@updatePassword');
+    Route::post('/ajax/user/update/notification', 'AjaxUserController@updateNotification');
+
+    // routes for supplier
+    Route::post('/ajax/update/supplier-preferences', 'PreferenceController@updateSupplierPreferences');
+    Route::get('/ajax/supplier/posts', 'AjaxSupplierController@getPosts');
+    Route::get('/ajax/supplier/posts', 'AjaxSupplierController@getPosts');
+
+
+    Route::post('/ajax/supplier/pool/add', 'AjaxSupplierController@addNewPool');
+    Route::post('/ajax/supplier/pool/update', 'AjaxSupplierController@updatePool');
+    Route::post('/ajax/supplier/pool/delete', 'AjaxSupplierController@deletePool');
+
+    //supplier post route
+    Route::post('/ajax/supplier/post/create', 'AjaxSupplierController@createNewPost');
+
 });
 
 Route::get('search', 'HomeController@index');

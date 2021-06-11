@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Pool extends Model
 {
     protected $table = "pools";
-    protected $primarykey  = "id";
-	protected $fillable = array('pool_name');
+    protected $primarykey = "id";
+    protected $fillable = ['user_id', 'pool_name', 'distance', 'pool_type'];
 }
